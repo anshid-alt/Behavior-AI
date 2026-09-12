@@ -1,0 +1,1482 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Behavior AI — V1</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:#e5e7eb;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+
+    background:#111827;
+
+    padding:18px 6%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    border-bottom:1px solid #263244;
+}
+
+.logo{
+
+    font-size:23px;
+
+    font-weight:bold;
+
+    color:#60a5fa;
+}
+
+nav a{
+
+    color:#e5e7eb;
+
+    text-decoration:none;
+
+    margin-left:18px;
+
+    font-size:14px;
+}
+
+nav a:hover{
+
+    color:#60a5fa;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    padding:70px 6%;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #172554
+    );
+}
+
+.hero h1{
+
+    font-size:45px;
+
+    color:#60a5fa;
+
+    margin-bottom:15px;
+}
+
+.hero p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#cbd5e1;
+
+    line-height:1.7;
+
+    font-size:17px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+
+    width:88%;
+
+    max-width:1100px;
+
+    margin:35px auto;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(200px,1fr)
+    );
+
+    gap:18px;
+
+    margin-bottom:30px;
+}
+
+.stat{
+
+    background:#111827;
+
+    border:1px solid #263244;
+
+    border-radius:14px;
+
+    padding:22px;
+
+    text-align:center;
+}
+
+.stat h2{
+
+    font-size:32px;
+
+    color:#60a5fa;
+
+    margin-bottom:7px;
+}
+
+.stat p{
+
+    color:#94a3b8;
+}
+
+
+/* =========================
+   ADD TASK
+========================= */
+
+.panel{
+
+    background:#111827;
+
+    border:1px solid #263244;
+
+    border-radius:14px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+}
+
+.panel h2{
+
+    color:#60a5fa;
+
+    margin-bottom:20px;
+}
+
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    2fr 1fr 1fr;
+
+    gap:12px;
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:13px;
+
+    background:#0f172a;
+
+    color:white;
+
+    border:1px solid #334155;
+
+    border-radius:8px;
+
+    outline:none;
+}
+
+input:focus,
+select:focus{
+
+    border-color:#60a5fa;
+}
+
+
+button{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:12px 18px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.add-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    margin-top:15px;
+}
+
+.add-btn:hover{
+
+    background:#1d4ed8;
+}
+
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.task{
+
+    background:#0f172a;
+
+    border:1px solid #263244;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.task-info{
+
+    flex:1;
+
+    min-width:220px;
+}
+
+.task-title{
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+.task-meta{
+
+    color:#94a3b8;
+
+    font-size:13px;
+}
+
+.status{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:12px;
+}
+
+.pending{
+
+    background:#3b2f10;
+
+    color:#facc15;
+}
+
+.completed{
+
+    background:#06351f;
+
+    color:#4ade80;
+}
+
+.skipped{
+
+    background:#3f1515;
+
+    color:#f87171;
+}
+
+.actions{
+
+    display:flex;
+
+    gap:7px;
+
+    flex-wrap:wrap;
+}
+
+.complete-btn{
+
+    background:#16a34a;
+
+    color:white;
+}
+
+.skip-btn{
+
+    background:#dc2626;
+
+    color:white;
+}
+
+.delete-btn{
+
+    background:#475569;
+
+    color:white;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-box{
+
+    margin-top:15px;
+}
+
+.progress-bg{
+
+    height:14px;
+
+    background:#1e293b;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:#60a5fa;
+
+    transition:0.4s;
+}
+
+.progress-text{
+
+    margin-top:8px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+
+    line-height:1.8;
+
+    color:#cbd5e1;
+}
+
+.info strong{
+
+    color:#60a5fa;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    margin-top:50px;
+
+    padding:30px;
+
+    text-align:center;
+
+    background:#111827;
+
+    border-top:1px solid #263244;
+
+    color:#94a3b8;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    header{
+
+        flex-direction:column;
+
+        gap:12px;
+    }
+
+    nav a{
+
+        margin:0 7px;
+    }
+
+    .hero h1{
+
+        font-size:32px;
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    main{
+
+        width:92%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="logo">
+
+🧠 Behavior AI
+
+</div>
+
+
+<nav>
+
+<a href="#home">
+Home
+</a>
+
+<a href="#tasks">
+Tasks
+</a>
+
+<a href="#progress">
+Progress
+</a>
+
+<a href="#about">
+About
+</a>
+
+</nav>
+
+</header>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section
+class="hero"
+id="home"
+>
+
+<h1>
+
+Behavior AI
+
+</h1>
+
+
+<p>
+
+An AI-inspired task tracking
+system that studies your task
+completion behavior.
+
+</p>
+
+</section>
+
+
+
+<main>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section
+class="dashboard"
+>
+
+<div class="stat">
+
+<h2 id="totalTasks">
+0
+</h2>
+
+<p>
+Total Tasks
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h2 id="completedTasks">
+0
+</h2>
+
+<p>
+Completed
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h2 id="pendingTasks">
+0
+</h2>
+
+<p>
+Pending
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h2 id="skippedTasks">
+0
+</h2>
+
+<p>
+Skipped
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     ADD TASK
+========================= -->
+
+<section
+class="panel"
+id="tasks"
+>
+
+<h2>
+➕ Add New Task
+</h2>
+
+
+<div class="form-grid">
+
+
+<input
+
+type="text"
+
+id="taskInput"
+
+placeholder="Enter your task..."
+
+>
+
+
+<input
+
+type="time"
+
+id="timeInput"
+
+
+>
+
+
+<select id="statusInput">
+
+<option value="Pending">
+Pending
+</option>
+
+</select>
+
+
+</div>
+
+
+<button
+
+class="add-btn"
+
+onclick="addTask()"
+
+>
+
+➕ Add Task
+
+</button>
+
+</section>
+
+
+
+<!-- =========================
+     TASK LIST
+========================= -->
+
+<section
+class="panel"
+>
+
+<h2>
+📋 My Tasks
+</h2>
+
+
+<div
+id="taskList"
+class="task-list"
+>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<section
+class="panel"
+id="progress"
+>
+
+<h2>
+📊 Progress
+</h2>
+
+
+<div class="progress-box">
+
+<div class="progress-bg">
+
+<div
+id="progressBar"
+class="progress-bar"
+>
+</div>
+
+</div>
+
+
+<div
+id="progressText"
+class="progress-text"
+>
+
+No tasks yet.
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     BEHAVIOR INSIGHT
+========================= -->
+
+<section
+class="panel"
+>
+
+<h2>
+🧠 Behavior Insight
+</h2>
+
+
+<div
+id="insight"
+class="info"
+>
+
+Add some tasks to start
+observing your behavior.
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section
+class="panel"
+id="about"
+>
+
+<h2>
+ℹ️ About V1
+</h2>
+
+
+<div class="info">
+
+<p>
+
+<strong>Behavior AI V1</strong>
+is the first web version of
+the project.
+
+</p>
+
+<p>
+
+V1 focuses on basic task
+tracking and progress.
+
+</p>
+
+<p>
+
+Future versions can add
+behavior analysis, avoidance
+patterns, experiments,
+personal models and other
+features.
+
+</p>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<p>
+🧠 Behavior AI — V1
+</p>
+
+<p>
+Learn from your actions.
+</p>
+
+</footer>
+
+
+
+<script>
+
+/* =================================
+   STORAGE
+================================= */
+
+let tasks =
+JSON.parse(
+localStorage.getItem(
+"behaviorAI_tasks"
+)
+) || [];
+
+
+
+/* =================================
+   SAVE
+================================= */
+
+function saveTasks(){
+
+    localStorage.setItem(
+        "behaviorAI_tasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+
+/* =================================
+   ADD TASK
+================================= */
+
+function addTask(){
+
+    const taskInput =
+    document.getElementById(
+        "taskInput"
+    );
+
+    const timeInput =
+    document.getElementById(
+        "timeInput"
+    );
+
+
+    const task =
+    taskInput.value.trim();
+
+    const time =
+    timeInput.value;
+
+
+    if(!task){
+
+        alert(
+            "Please enter a task."
+        );
+
+        return;
+
+    }
+
+
+    const newTask = {
+
+        id:Date.now(),
+
+        task:task,
+
+        scheduledTime:
+        time || "Not set",
+
+        status:"Pending",
+
+        createdAt:
+        new Date().toLocaleString(),
+
+        completedAt:null
+
+    };
+
+
+    tasks.push(newTask);
+
+
+    saveTasks();
+
+
+    taskInput.value="";
+
+    timeInput.value="";
+
+
+    renderTasks();
+
+}
+
+
+
+/* =================================
+   COMPLETE
+================================= */
+
+function completeTask(id){
+
+    const task =
+    tasks.find(
+        t => t.id === id
+    );
+
+
+    if(!task) return;
+
+
+    task.status =
+    "Completed";
+
+
+    task.completedAt =
+    new Date().toLocaleString();
+
+
+    saveTasks();
+
+
+    renderTasks();
+
+}
+
+
+
+/* =================================
+   SKIP
+================================= */
+
+function skipTask(id){
+
+    const task =
+    tasks.find(
+        t => t.id === id
+    );
+
+
+    if(!task) return;
+
+
+    task.status =
+    "Skipped";
+
+
+    saveTasks();
+
+
+    renderTasks();
+
+}
+
+
+
+/* =================================
+   DELETE
+================================= */
+
+function deleteTask(id){
+
+    tasks =
+    tasks.filter(
+        t => t.id !== id
+    );
+
+
+    saveTasks();
+
+
+    renderTasks();
+
+}
+
+
+
+/* =================================
+   RENDER TASKS
+================================= */
+
+function renderTasks(){
+
+    const list =
+    document.getElementById(
+        "taskList"
+    );
+
+
+    list.innerHTML="";
+
+
+    if(tasks.length===0){
+
+        list.innerHTML = `
+
+        <div class="info">
+
+        No tasks added yet.
+
+        </div>
+
+        `;
+
+    }
+
+
+    tasks
+    .slice()
+    .reverse()
+    .forEach(
+        function(task){
+
+            const div =
+            document.createElement(
+                "div"
+            );
+
+
+            div.className =
+            "task";
+
+
+            let statusClass =
+            "pending";
+
+
+            if(
+                task.status ===
+                "Completed"
+            ){
+
+                statusClass =
+                "completed";
+
+            }
+
+
+            if(
+                task.status ===
+                "Skipped"
+            ){
+
+                statusClass =
+                "skipped";
+
+            }
+
+
+            let buttons="";
+
+
+            if(
+                task.status ===
+                "Pending"
+            ){
+
+                buttons = `
+
+                <button
+
+                class="complete-btn"
+
+                onclick="
+                completeTask(${task.id})
+                "
+
+                >
+                ✓ Complete
+                </button>
+
+
+                <button
+
+                class="skip-btn"
+
+                onclick="
+                skipTask(${task.id})
+                "
+
+                >
+                ✕ Skip
+                </button>
+
+                `;
+
+            }
+
+
+            div.innerHTML = `
+
+            <div class="task-info">
+
+                <div class="task-title">
+
+                    ${escapeHTML(task.task)}
+
+                </div>
+
+
+                <div class="task-meta">
+
+                    ⏰ Scheduled:
+                    ${escapeHTML(
+                        task.scheduledTime
+                    )}
+
+                    <br>
+
+                    📅 Created:
+                    ${escapeHTML(
+                        task.createdAt
+                    )}
+
+                </div>
+
+
+                <span
+                class="status ${statusClass}"
+                >
+
+                    ${task.status}
+
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                ${buttons}
+
+
+                <button
+
+                class="delete-btn"
+
+                onclick="
+                deleteTask(${task.id})
+                "
+
+                >
+
+                🗑 Delete
+
+                </button>
+
+            </div>
+
+            `;
+
+
+            list.appendChild(div);
+
+        }
+    );
+
+
+    updateDashboard();
+
+}
+
+
+
+/* =================================
+   DASHBOARD
+================================= */
+
+function updateDashboard(){
+
+    const total =
+    tasks.length;
+
+
+    const completed =
+    tasks.filter(
+        t =>
+        t.status ===
+        "Completed"
+    ).length;
+
+
+    const pending =
+    tasks.filter(
+        t =>
+        t.status ===
+        "Pending"
+    ).length;
+
+
+    const skipped =
+    tasks.filter(
+        t =>
+        t.status ===
+        "Skipped"
+    ).length;
+
+
+    document.getElementById(
+        "totalTasks"
+    ).innerText =
+    total;
+
+
+    document.getElementById(
+        "completedTasks"
+    ).innerText =
+    completed;
+
+
+    document.getElementById(
+        "pendingTasks"
+    ).innerText =
+    pending;
+
+
+    document.getElementById(
+        "skippedTasks"
+    ).innerText =
+    skipped;
+
+
+    updateProgress(
+        total,
+        completed
+    );
+
+
+    updateInsight(
+        total,
+        completed,
+        skipped
+    );
+
+}
+
+
+
+/* =================================
+   PROGRESS
+================================= */
+
+function updateProgress(
+    total,
+    completed
+){
+
+    const bar =
+    document.getElementById(
+        "progressBar"
+    );
+
+    const text =
+    document.getElementById(
+        "progressText"
+    );
+
+
+    if(total===0){
+
+        bar.style.width =
+        "0%";
+
+        text.innerText =
+        "No tasks yet.";
+
+        return;
+
+    }
+
+
+    const percentage =
+    Math.round(
+        (completed / total)
+        * 100
+    );
+
+
+    bar.style.width =
+    percentage + "%";
+
+
+    text.innerText =
+    "Completion rate: "
+    + percentage
+    + "%";
+
+}
+
+
+
+/* =================================
+   BASIC BEHAVIOR INSIGHT
+================================= */
+
+function updateInsight(
+    total,
+    completed,
+    skipped
+){
+
+    const insight =
+    document.getElementById(
+        "insight"
+    );
+
+
+    if(total===0){
+
+        insight.innerHTML =
+        "Add some tasks to start observing your behavior.";
+
+        return;
+
+    }
+
+
+    const rate =
+    Math.round(
+        (completed / total)
+        * 100
+    );
+
+
+    if(rate >= 80){
+
+        insight.innerHTML =
+
+        "⭐ Strong completion pattern. " +
+        "You are completing most of your recorded tasks.";
+
+    }
+
+    else if(rate >= 50){
+
+        insight.innerHTML =
+
+        "👍 Moderate completion pattern. " +
+        "Some tasks are getting completed while others remain unfinished.";
+
+    }
+
+    else{
+
+        insight.innerHTML =
+
+        "🔎 Your current completion rate is low. " +
+        "Keep recording tasks so future versions can analyze patterns.";
+
+    }
+
+
+    if(skipped > completed){
+
+        insight.innerHTML +=
+
+        "<br><br>⚠️ You currently have more skipped tasks than completed tasks.";
+
+    }
+
+}
+
+
+
+/* =================================
+   SECURITY / HTML ESCAPE
+================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replaceAll("&","&amp;")
+
+        .replaceAll("<","&lt;")
+
+        .replaceAll(">","&gt;")
+
+        .replaceAll('"',"&quot;")
+
+        .replaceAll("'","&#039;");
+
+}
+
+
+
+/* =================================
+   START
+================================= */
+
+renderTasks();
+
+</script>
+
+
+</body>
+
+</html>
+```
